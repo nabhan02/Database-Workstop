@@ -20,7 +20,7 @@ Run this command in your terminal to install virtualenv:
     ~~~
     > py -m venv venv
     ~~~
-2. Then, activate your virtual environment
+2. Then, activate your virtual environment:
 
     For macOS/Linux:
     ~~~
