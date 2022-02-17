@@ -67,7 +67,71 @@ Run this command in your terminal to install virtualenv:
 
     Using what you've learned from the previous two functions, update an item in the database (HINT: this function aims to update an object's contents. Think of each grocery item as an entry in a dictionary).
     
-## Hosting the App on Heroku
+## Hosting the App on Heroku (optional)
+1. First, go to heroku.com and make an account.
+1. Then, while still in the virtual environment, install the Heroku CLI tool following these instructions: https://devcenter.heroku.com/articles/heroku-cli
+2. In the terminal, run the following commands:
+    ~~~
+    heroku login
+    heroku create
+    ~~~
+    These commands will log you into the CLI and create a Heroku project for the current directory.
+3. To create a database management system in the Heroku app, run the following command:
+    ~~~
+    heroku addons:create heroku-postgresql:hobby-dev
+    ~~~
+    This adds the postgresql RDBMS to our app. You can read more about postgresql [here](https://www.postgresql.org/about/).
+4. Next, you'll need to install two libraries so that your app can communicate with the postgressql database.
+   ~~~
+   pip install psycopg2
+   pip install gunicorn
+   ~~~
+5. Now, you'll need to update the `starter.py` file to communicate with the Heroku database instead of the local `test.db`.
+   To do so, add the following import:
+   ~~~
+   from os import environ
+   ~~~
+   and change
+   ~~~
+   app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+   ~~~
+   to 
+   ~~~
+   uri = environ.get('DATABASE_URL')
+   if uri and uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+   app.config['SQLALCHEMY_DATABASE_URI'] = uri
+   ~~~
+   This effectively updates the uri to point to the new remote database. The if statement accounts for a Heroku uri inconsistency bug.
+6. You now need to create two new files so that Heroku knows how to run your app.
+   ~~~
+   pip freeze > requirements.txt
+   touch Procfile
+   ~~~
+   `requirements.txt` contains all the required import libraries and `Procfile` states how to run your app.
+   Add the following to the `Procfile` file:
+   ~~~
+   web: gunicorn starter:app
+   ~~~
+7. Commit and push your changes to Heroku.
+   ~~~
+   git add .
+   git commit -m “initial commit”
+   git push heroku master
+   ~~~
+8. Export your local database to Heroku by doing the following:
+   ~~~
+   heroku python run
+   >>> from app import db
+   >>> db.create_all()
+   ~~~
+   This ensures that Heroku database follows the same table structure as the one saved locally.
+9. Now run the Heroku app:
+   ~~~
+   heroku run
+   ~~~
+   and you're all set!
+   
 ## Conclusion
 Now you're done! That's the basic rundown of how to set up a Flask app using a SQL database through Flask-SQLAlchemy. Even if your team might not be using Flask, take a look as you might be implementing something similar in your project.
 
