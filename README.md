@@ -66,6 +66,8 @@ Run this command in your terminal to install virtualenv:
 6. Finally, implement the update function.
 
     Using what you've learned from the previous two functions, update an item in the database (HINT: this function aims to update an object's contents. Think of each grocery item as an entry in a dictionary).
+    
+## Hosting the App on Heroku
 ## Conclusion
 Now you're done! That's the basic rundown of how to set up a Flask app using a SQL database through Flask-SQLAlchemy. Even if your team might not be using Flask, take a look as you might be implementing something similar in your project.
 
