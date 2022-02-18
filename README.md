@@ -121,14 +121,14 @@ Run this command in your terminal to install virtualenv:
    ~~~
 8. Export your local database to Heroku by doing the following:
    ~~~
-   heroku python run
+   heroku run python
    >>> from app import db
    >>> db.create_all()
    ~~~
    This ensures that Heroku database follows the same table structure as the one saved locally.
 9. Now run the Heroku app:
    ~~~
-   heroku run
+   heroku open
    ~~~
    and you're all set!
    
