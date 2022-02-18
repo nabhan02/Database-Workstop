@@ -117,7 +117,7 @@ Run this command in your terminal to install virtualenv:
    ~~~
    git add .
    git commit -m “initial commit”
-   git push heroku master
+   git push heroku main
    ~~~
 8. Export your local database to Heroku by doing the following:
    ~~~
